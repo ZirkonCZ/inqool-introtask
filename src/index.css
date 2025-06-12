@@ -18,6 +18,8 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+  --color-tertiary: var(--tertiary);
+  --color-tertiary-foreground: var(--tertiary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
@@ -53,6 +55,8 @@
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
+  --tertiary: oklch(96.7% 0.003 264.542);
+  --tertiary-foreground: oklch(0.598 0.203 264.376);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
@@ -87,6 +91,8 @@
   --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
+  --tertiary: oklch(27.8% 0.033 256.848);
+  --tertiary-foreground: oklch(0.598 0.203 264.376);
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);
@@ -116,5 +122,27 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .h1 {
+    @apply text-3xl;
+    @apply font-bold mb-6;
+  }
+
+  .h2 {
+    @apply text-2xl;
+    @apply font-bold mb-4;
+  }
+
+  .p {
+    @apply mb-8;
+    @apply leading-7;
+    @apply text-justify;
+  }
+
+  .routelink {
+    @apply text-tertiary-foreground font-bold hover:underline;
   }
 }
