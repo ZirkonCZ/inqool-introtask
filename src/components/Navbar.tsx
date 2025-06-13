@@ -5,10 +5,10 @@ import { NavbarCombobox } from '@/components/NavbarCombobox';
 
 export default function Navbar() {
     return (
-        <aside className="h-16 bg-gray-100 dark:bg-gray-800 p-4 flex justify-between gap-4">
+        <aside className="h-16 bg-gray-100 dark:bg-[var(--color-darkbar-background)] p-4 flex justify-between gap-4">
             <Link
                 to="/"
-                className="text-xl font-extrabold mr-4 text-tertiary-foreground"
+                className="text-xl font-extrabold mr-4 text-inqool-primary"
             >
                 Home
             </Link>

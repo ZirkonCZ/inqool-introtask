@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 const HomePage: FC = () => {
     return (
         <div className="homepage text-center p-12">
-            <h1 className="h1 mb-12">Select the data entity:</h1>
+            <h1 className="h1 text-inqool-primary mb-16">Inqool Introtask</h1>
+            <h2 className="h2 mb-12">Select the data entity:</h2>
             <div className="flex justify-center gap-4 mb-8">
                 <Button className="mb-4" variant="outline" size="lg" asChild>
                     <Link to="/users">Users</Link>
