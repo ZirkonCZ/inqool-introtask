@@ -1,98 +1,39 @@
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod"
+import { zodResolver } from "@hookform/resolvers/zod";
 import { createUserSchema, CreateUserDto } from "../schema";
-import { useCreateUser } from "../hooks";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
-import { toast } from "sonner"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 
-export function UserForm() {
-  const form = useForm<CreateUserDto>({
+type Props = {
+  onSubmit: (data: CreateUserDto) => void;
+};
+
+export function UserForm({ onSubmit }: Props) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateUserDto>({
     resolver: zodResolver(createUserSchema),
   });
-  
-  const createUserMutation = useCreateUser();
-
-  function onSubmit(values: CreateUserDto) {
-    createUserMutation.mutate(values, { 
-      onSuccess: () => {
-        form.reset();
-        toast("User added successfully!", {
-          action: {
-          label: "Close",
-          onClick: () => console.log("Close"),
-          },
-        })
-      },
-    });
-  }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Vito Scaletta" {...field} />
-              </FormControl>
-            </FormItem>
-          )}
-          />
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <input {...register("name")} placeholder="Name" className="input" />
+      {errors.name && <p>{errors.name.message}</p>}
 
-        <FormField
-          name="gender"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Gender" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="male">Male</SelectItem>
-                    <SelectItem value="female">Female</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-              </FormControl>
-            </FormItem>
-          )}
-          />
-          
-        <FormField
-          name="banned"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Is User Banned?</FormLabel>
-              <Switch
-                checked={field.value}
-                onCheckedChange={field.onChange}
-              />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" disabled={createUserMutation.isPending} className="w-32">
-          {createUserMutation.isPending ? "Submitting..." : "Submit"}
-        </Button>      
-      </form>
-    </Form>        
+      <select {...register("gender")} className="input">
+        <option value="">Select gender</option>
+        <option value="female">Female</option>
+        <option value="male">Male</option>
+        <option value="other">Other</option>
+      </select>
+      {errors.gender && <p>{errors.gender.message}</p>}
+    {/* 
+      <label>
+        <input type="checkbox" {...register("banned")} />
+        Banned
+      </label> */}
+
+      <button type="submit" className="btn">Submit</button>
+    </form>
   );
 }

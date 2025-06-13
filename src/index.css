@@ -145,4 +145,11 @@
   .routelink {
     @apply text-tertiary-foreground font-bold hover:underline;
   }
+
+  .tablerow {
+    @apply border-b border-border/50;
+    @apply hover:bg-muted/50;
+    @apply transition-colors;
+    @apply hover:bg-(--color-ring);
+  }
 }
