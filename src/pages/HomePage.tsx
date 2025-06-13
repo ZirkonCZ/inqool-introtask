@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { SeedButton } from "@/features/seed/SeedButton";
 import { FC } from "react";
 import { Link } from 'react-router-dom';
 
@@ -14,6 +15,7 @@ const HomePage: FC = () => {
                     <Link to="/animals">Animals</Link>
                 </Button>
             </div>
+            <SeedButton />
         </div>
     );
 }
