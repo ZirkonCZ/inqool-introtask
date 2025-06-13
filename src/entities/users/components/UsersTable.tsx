@@ -3,6 +3,7 @@ import { useState, useMemo } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { CreateUserForm } from "./CreateUserForm";
 import {
   Dialog,
@@ -40,8 +41,10 @@ export function UsersTable() {
   
   const [mode, setMode] = useState<"none" | "edit" | "delete" | "ban">("none");
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [createFormOpen, setCreateFormOpen] = useState(false);
+  const [editFormOpen, setEditFormOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [inProgress, setInProgress] = useState(false);
   
   const filteredUsers = useMemo(() => {
     if (!users) return [];
@@ -56,8 +59,9 @@ export function UsersTable() {
   if (!users || users.length === 0) return <p className="p">No users found.</p>;
       
   function deleteUser(id: string) {
-    deleteUserMutation.mutate(id, { 
+    deleteUserMutation.mutate(id, {
       onSuccess: () => {
+        setDeleteDialogOpen(false);
         toast("User deleted!", {
           action: {
             label: "Close",
@@ -68,31 +72,11 @@ export function UsersTable() {
     });
   }
   
-  // function hammerUser(id: string) {
-  //   const data = {
-  //     name: hammerredUser.data?.name || "",
-  //     gender: hammerredUser.data?.gender,
-  //     banned: !hammerredUser.data?.banned,
-  //   };
-  
-  //   updateUserMutation.mutate({id: hammerredUser.data?.id || "", data}, { 
-  //     onSuccess: () => {
-  //       toast("User {hammerredUser.data?.name} updated!", {
-  //         action: {
-  //         label: "Close",
-  //         onClick: () => console.log("Close"),
-  //         },
-  //       })
-  //     },
-  //   });
-  // };
-  
-
   function handleRowClick(user: User) {
     switch (mode) {
       case "edit":
         setSelectedUser(user);
-        setEditDialogOpen(true);
+        setEditFormOpen(true);
         break;
       case "delete":
         setSelectedUser(user);
@@ -100,6 +84,7 @@ export function UsersTable() {
         break;
       case "ban":
         setSelectedUser(user);
+        setInProgress(true);
         updateUserMutation.mutate(
           {
             id: user.id,
@@ -111,7 +96,8 @@ export function UsersTable() {
           },
           {
             onSuccess: () => {
-              toast(`User ${user.name} updated!`, {
+              setInProgress(false);
+              toast(`User ${user.name} hammered!`, {
                 action: {
                   label: "Close",
                   onClick: () => console.log("Close"),
@@ -126,29 +112,30 @@ export function UsersTable() {
     }
   }
 
-
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-w-3xl w-full">
       <div className="flex gap-4 items-end justify-between mb-4">
         <div>
-          <Dialog>
+          <Dialog open={createFormOpen} onOpenChange={setCreateFormOpen}>
             <DialogTrigger asChild>
               <Button variant="outline">Create User</Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle className="mb-4">Create New User</DialogTitle>
-                <CreateUserForm />
+                <CreateUserForm 
+                  onSuccess={() => { setCreateFormOpen(false)}}
+                />
               </DialogHeader>
             </DialogContent>
           </Dialog>
         </div>
         <div className="flex gap-4 items-end">
           <div>
-            <label className="block text-sm">Name</label>
             <Input
               className="border p-1 rounded"
               value={filters.name}
+              placeholder="Filter by name"
               onChange={(e) => setFilters({ ...filters, name: e.target.value })}
             />
           </div>
@@ -178,12 +165,23 @@ export function UsersTable() {
             Delete
           </Button>
         </div>
+
+        <div className="flex flex-center">
+          {inProgress && (
+            <Label>
+              <span className="animate-spin">🔨</span>Processing...
+            </Label>
+          )}
+        </div>
+
+        <div>
           <Button
             variant={mode === "ban" ? "destructive" : "outline"}
             onClick={() => setMode(mode === "ban" ? "none" : "ban")}
           >
-            Ban Hammer 🔨
+            🔨 Ban Hammer
           </Button>
+        </div>
       </div>
 
       <table className="table-auto border-collapse w-full">
@@ -211,12 +209,17 @@ export function UsersTable() {
         </tbody>
       </table>
 
-      <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
+      <Dialog open={editFormOpen} onOpenChange={setEditFormOpen}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Edit User</DialogTitle>
           </DialogHeader>
-          {selectedUser && <EditUserForm user={selectedUser} />}
+          {selectedUser &&
+            <EditUserForm 
+              user={selectedUser}
+              onSuccess={() => { setEditFormOpen(false)}}
+            />
+          }
         </DialogContent>
       </Dialog>
 
@@ -225,20 +228,25 @@ export function UsersTable() {
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              <p className="mb-4">You are about to delete the user<br/></p>
-              <p><strong>{selectedUser?.name}</strong>,<br/></p>
-              <p className="mb-4">: {selectedUser?.id}.</p>
-              Are you sure you want to proceed? This action cannot be undone.
+              <p className="mb-4">
+                You are about to delete the user <strong>{selectedUser?.name}</strong>,
+                <br />
+                ID: {selectedUser?.id}.
+              </p>
+              <p>
+                Are you sure you want to proceed? This action cannot be undone.
+              </p>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => {
+              onClick={async (e) => {
+                e.preventDefault();
                 if (selectedUser) deleteUser(selectedUser.id);
               }}
             >
-              Continue
+              {deleteUserMutation.isPending ? "Deleting..." : "Continue"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

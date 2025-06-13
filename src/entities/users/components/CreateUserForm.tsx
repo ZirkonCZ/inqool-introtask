@@ -21,7 +21,11 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-export function CreateUserForm() {
+export function CreateUserForm({
+  onSuccess
+}: {
+  onSuccess?: () => void;
+}) {
   const form = useForm<CreateUserDto>({
     resolver: zodResolver(createUserSchema),
   });
@@ -38,6 +42,7 @@ export function CreateUserForm() {
           onClick: () => console.log("Close"),
           },
         })
+        if (onSuccess) onSuccess();
       },
     });
   }

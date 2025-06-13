@@ -22,7 +22,14 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-export function EditUserForm({ user }: { user: User }) {
+export function EditUserForm({
+  user,
+  onSuccess,
+}: {
+  user: User;
+  onSuccess?: () => void;
+}) {
+  
   const form = useForm<UpdateUserDto>({
     resolver: zodResolver(updateUserSchema),
   });
@@ -39,6 +46,7 @@ export function EditUserForm({ user }: { user: User }) {
           onClick: () => console.log("Close"),
           },
         })
+        if (onSuccess) onSuccess();
       },
     });
   }
@@ -52,7 +60,7 @@ export function EditUserForm({ user }: { user: User }) {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder={user.name} {...field} />
+                <Input defaultValue={user.name} placeholder={user.name} {...field} />
               </FormControl>
             </FormItem>
           )}
@@ -65,7 +73,7 @@ export function EditUserForm({ user }: { user: User }) {
               <FormControl>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder={user.gender} />
+                    <SelectValue placeholder={user.gender} defaultValue={user.gender} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="male">Male</SelectItem>
