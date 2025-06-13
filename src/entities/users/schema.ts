@@ -1,10 +1,10 @@
-import { z } from "zod";
+import { z } from "zod/v4";
 
 export const userSchema = z.object({
   id: z.string(),
   name: z.string().min(1, "Name is required"),
   gender: z.enum(["female", "male", "other"]),
-  banned: z.boolean(),
+  banned: z.boolean().default(false).optional(),
 });
 
 export const createUserSchema = userSchema.omit({ id: true });

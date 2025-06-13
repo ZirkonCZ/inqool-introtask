@@ -5,6 +5,15 @@ import { useState, useMemo } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { UserForm } from "./UserForm";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 export function UsersTable() {
   const { data: users, isLoading, error } = useQuery({
@@ -35,13 +44,17 @@ export function UsersTable() {
     <div className="space-y-4">
       <div className="flex gap-4 items-end justify-between mb-4">
         <div>
-          <Button
-            onClick={() => {
-
-            }}
-          >
-            Create User
-          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline">Create User</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle className="mb-4">Create New User</DialogTitle>
+                <UserForm />
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
         </div>
         <div className="flex gap-4 items-end">
           <div>
