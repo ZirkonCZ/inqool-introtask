@@ -39,7 +39,7 @@ export function CreateUserForm({
         toast("User added successfully!", {
           action: {
           label: "Close",
-          onClick: () => console.log("Close"),
+          onClick: () => {},
           },
         })
         if (onSuccess) onSuccess();
@@ -68,7 +68,7 @@ export function CreateUserForm({
             <FormItem>
               <FormControl>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger className="w-[180px]">
+                  <SelectTrigger className="w-[var(--btn-select-width)]">
                     <SelectValue placeholder="Gender" />
                   </SelectTrigger>
                   <SelectContent>

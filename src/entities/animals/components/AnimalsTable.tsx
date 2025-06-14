@@ -44,7 +44,7 @@ export function AnimalsTable() {
 
   const filteredAnimals = useMemo(() => {
     if (!animals) return [];
-    
+
     return animals.filter((animal) =>
       animal.name.toLowerCase().includes(debouncedFilters.name.toLowerCase())
     );
@@ -190,6 +190,7 @@ export function AnimalsTable() {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
+              className="hover:bg-[var(--destructive)] hover:text-white transition-colors"
               onClick={async (e) => {
                 e.preventDefault();
                 if (selectedAnimal) deleteAnimal(selectedAnimal.id);

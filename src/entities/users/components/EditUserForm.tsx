@@ -29,7 +29,7 @@ export function EditUserForm({
   user: User;
   onSuccess?: () => void;
 }) {
-  
+
   const form = useForm<UpdateUserDto>({
     resolver: zodResolver(updateUserSchema),
   });
@@ -43,7 +43,7 @@ export function EditUserForm({
         toast("User updated!", {
           action: {
           label: "Close",
-          onClick: () => console.log("Close"),
+          onClick: () => {},
           },
         })
         if (onSuccess) onSuccess();
@@ -72,7 +72,7 @@ export function EditUserForm({
             <FormItem>
               <FormControl>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger className="w-[180px]">
+                  <SelectTrigger className="w-[var(--btn-select-width)]">
                     <SelectValue placeholder={user.gender} defaultValue={user.gender} />
                   </SelectTrigger>
                   <SelectContent>

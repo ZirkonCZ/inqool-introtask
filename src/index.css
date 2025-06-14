@@ -44,6 +44,7 @@
 
 :root {
   --radius: 0.625rem;
+  --minh: 1000px;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -54,13 +55,13 @@
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
-  --inqool-primary: oklch(0.627 0.224 29.12); /* Inqool's primary ee323e */
+  --inqool-primary: oklch(0.6196 0.2214 23.82); /* Inqool's primary ee323e */
   --tertiary: oklch(96.7% 0.003 264.542);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.646 0.224 29.12); /* Inqool's hover fb2133 */
+  --destructive: oklch(0.632 0.243 25); /* Inqool's hover fb2133 */
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
@@ -75,12 +76,13 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --btn-select-width: 180px;
 }
 
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
-  --darkbar-background: oklch(0.278 0.012 244.6); /* Inqool's footer background #313638 */
+  --darkbar-background: oklch(0.3289 0.0077 223.66); /* Inqool's footer background #313638 */
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
@@ -90,12 +92,12 @@
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
   --tertiary: oklch(27.8% 0.033 256.848);
-  --inqool-primary: oklch(0.627 0.224 29.12); /* Inqool's primary ee323e */
+  --inqool-primary: oklch(0.6196 0.2214 23.82); /* Inqool's primary ee323e */
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.646 0.224 29.12); /* Inqool's hover fb2133 */
+  --destructive: oklch(0.632 0.243 25); /* Inqool's hover fb2133 */
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);

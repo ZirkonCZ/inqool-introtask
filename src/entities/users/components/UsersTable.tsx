@@ -64,7 +64,7 @@ export function UsersTable() {
         toast("User deleted!", {
           action: {
             label: "Close",
-            onClick: () => console.log("Close"),
+            onClick: () => {},
           },
         })
       },
@@ -99,7 +99,7 @@ export function UsersTable() {
               toast(`User ${user.name} hammered!`, {
                 action: {
                   label: "Close",
-                  onClick: () => console.log("Close"),
+                  onClick: () => {},
                 },
               });
             },
@@ -154,6 +154,7 @@ export function UsersTable() {
           </Button>
           <Button
             variant={mode === "delete" ? "destructive" : "outline"}
+            className="hover:bg-destructive transition-colors"
             onClick={() => setMode(mode === "delete" ? "none" : "delete")}
           >
             Delete
@@ -235,6 +236,7 @@ export function UsersTable() {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
+              className="hover:bg-[var(--destructive)] hover:text-white transition-colors"
               onClick={async (e) => {
                 e.preventDefault();
                 if (selectedUser) deleteUser(selectedUser.id);

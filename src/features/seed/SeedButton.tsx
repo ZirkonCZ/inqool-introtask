@@ -14,7 +14,7 @@ export function SeedButton() {
       toast("Database seeded successfully!", {
         action: {
         label: "Close",
-        onClick: () => console.log("Close"),
+        onClick: () => {},
         },
       }),
       queryClient.invalidateQueries({ queryKey: ["users"] });

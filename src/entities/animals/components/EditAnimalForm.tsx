@@ -78,7 +78,7 @@ export function EditAnimalForm({
             <FormItem>
               <FormControl>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger className="w-[180px]">
+                  <SelectTrigger className="w-[var(--btn-select-width)]">
                     <SelectValue placeholder={animal.type} defaultValue={animal.type} />
                   </SelectTrigger>
                   <SelectContent>
